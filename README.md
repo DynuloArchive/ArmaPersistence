@@ -42,7 +42,6 @@ This repository only contains the client side components of ArmaPersistence. Add
 - Locked State
 - Inventory
 - ACE Cargo
-
 - ACE spray paint tags
 
 ### Groups
