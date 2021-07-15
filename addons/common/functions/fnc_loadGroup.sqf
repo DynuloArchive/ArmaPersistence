@@ -40,6 +40,11 @@ GVAR(groupIDStack) pushBackUnique _id;
 		case "behaviour": {
 			_group setBehaviour _value;
 		};
+		// TODO Units won't be created yet, fix in the future
+		// case "leader": {
+		// 	private _units = allUnits;
+		// 	_group setLeader (_units select (_units findIf { _x getVariable [QGVAR(id), _value] isEqualTo _value }));
+		// };
 		case "waypoints": {
 			{
 				_x params ["_position", "_vars"];
@@ -60,7 +65,6 @@ GVAR(groupIDStack) pushBackUnique _id;
 							_wp setWaypointCombatMode _value;
 						};
 						case "type": {
-							systemChat format ["waypoint type %1", _value];
 							_wp setWaypointType _value;
 						};
 						case "script": {

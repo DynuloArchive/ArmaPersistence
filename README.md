@@ -25,3 +25,47 @@ Persistent Missions for Arma 3
 ## Note
 
 This repository only contains the client side components of ArmaPersistence. Additional cloud services are required that are not public. If the cloud services are ever shut down, the code will be made public at that time.
+
+## What is tracked
+
+### Objects
+- Engine State
+- Light State
+- Collision Light State
+- Fuel Level
+- Cargo Fuel Level
+- Inflamed state (Campfires)
+- Plate Number
+- Textures
+- Hit Point Damage
+- Animation Phases (Open Doors, Bar Gate Up/Down)
+- Locked State
+- Inventory
+- ACE Cargo
+
+- ACE spray paint tags
+
+### Groups
+- Group ID
+- Behaviour
+- Speed
+- Combat Mode
+- Formation
+- Waypoints
+
+### Units
+- Name
+- Loadout
+- Face
+- Speaker
+- Pitch
+- Rank
+- Flashlight On/Off
+- IR Laser On/Off
+- Current Weapon (Primary / Secondary / Launcher)
+- Stance
+- Combat Mode
+- Behaviour
+- Current Vehicle Seat (Driver / Gunner / Commander / Cargo)
+- ACE Surrendering
+- ACE Handcuffed

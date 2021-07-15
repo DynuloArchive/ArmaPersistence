@@ -25,11 +25,39 @@ GVAR(objectNotSeen) = GVAR(objectNotSeen) - [_id];
 if (_obj getVariable [QGVAR(ignore), false]) exitWith {};
 if (time < (_obj getVariable [QGVAR(nextUpdate), -1])) exitWith {};
 
-private _vars = [
-	["engine", isEngineOn _obj],
-	["light", isLightOn _obj],
-	["collision", isCollisionLightOn _obj]
-];
+private _vars = [];
+
+if (_obj isKindOf "Car") then {
+	_vars pushBack ["engine", isEngineOn _obj];
+	_vars pushBack ["light", isLightOn _obj];
+};
+if (_obj isKindOf "Tank") then {
+	_vars pushBack ["engine", isEngineOn _obj];
+	_vars pushBack ["light", isLightOn _obj];
+};
+if (_obj isKindOf "Helicopter") then {
+	_vars pushBack ["engine", isEngineOn _obj];
+	_vars pushBack ["light", isLightOn _obj];
+	_vars pushBack ["collision", isCollisionLightOn _obj];
+};
+
+if (missionNamespace getVariable ["ace_cargo", false]) then {
+	private _cargo = [];
+    {
+        _cargo pushBack (if (_x isEqualType "") then {
+            [0, _x]
+        } else {
+            [1, _x getVariable [QGVAR(id), 0]]
+        });
+    } forEach (_obj getVariable ["ace_cargo_loaded", []]);
+	if (_cargo isNotEqualTo []) then {
+		_vars pushBack ["cargo", _cargo];
+	};
+};
+
+if (_obj getVariable ["ace_rearm_magazineClass", ""] isNotEqualTo "") then {
+	_vars pushBack ["ace_magazine", _obj getVariable ["ace_rearm_magazineClass", ""]];
+};
 
 if !(alive _obj) then {
 	_vars pushBack ["alive", false];
@@ -61,15 +89,13 @@ if (_hits isNotEqualTo []) then {
 	_vars pushBack ["hits", _hits];
 };
 
-
-private _names = animationNames _obj;
 private _phases = [];
 {
 	private _phase = _obj animationPhase _x;
 	if (_phase != 0) then {
 		_phases pushBack [_x, _phase];
 	};
-} forEach _names;
+} forEach (animationNames _obj);
 if (_phases isNotEqualTo []) then {
 	_vars pushBack ["phases", _phases];
 };
@@ -89,7 +115,7 @@ if (_fuelCargo != -1) then {
 };
 
 private _tree = [_obj] call FUNC(getInventory);
-if (_tree isNotEqualTo []) then {
+if (_tree isNotEqualTo [[[[],[]],[],[[],[]]],[]]) then {
 	_vars pushBack ["inventory", _tree];
 };
 

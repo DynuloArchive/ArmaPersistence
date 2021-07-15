@@ -18,10 +18,8 @@ _position set [1, parseNumber (_position select 1)];
 // _position set [2, parseNumber (_position select 2)];
 _position deleteAt 2;
 
-systemChat format ["looking for group %1", _group];
 private _groups = allGroups;
 private _group = _groups select (_groups findIf {(_x getVariable [QGVAR(id), "-"]) isEqualTo _group});
-systemChat format ["found group %1", _group];
 private _unit = _group createUnit [_class, _position, [], 0, "NONE"];
 
 _unit enableSimulationGlobal false;
@@ -65,6 +63,12 @@ _unit setVectorDirAndUp _rotation;
 		case "behaviour": {
 			_unit setBehaviour _value;
 		};
+		case "flashlight": {
+			_unit enableGunLights "ForceOn";
+		};
+		case "irlaser": {
+			_unit enableIRLasers _value;
+		};
 		case "vehicle": {
 			_value params ["_vid", "_seat"];
 			private _objects = allMissionObjects "All";
@@ -82,8 +86,14 @@ _unit setVectorDirAndUp _rotation;
 				default {
 					_unit moveInCargo [_vehicle, _seat];
 				};
-			}
-		}
+			};
+		};
+		case "ace_surrender": {
+			[_unit, true] call ACE_captives_fnc_setSurrendered;
+		};
+		case "ace_handcuffed": {
+			[_unit, true] call ACE_captives_fnc_setHandcuffed;
+		};
 	};
 } forEach _variables;
 

@@ -45,12 +45,10 @@ if (pitch _unit != 1) then {
 if !(alive _unit) then {
 	_vars pushBack ["alive", false];
 };
-private _flashlight = _unit isFlashlightOn (currentWeapon _unit);
-if (_flashlight) then {
+if (_unit isFlashlightOn (currentWeapon _unit)) then {
 	_vars pushBack ["flashlight", true];
 };
-private _irLaser = _unit isIRLaserOn (currentWeapon _unit);
-if (_irLaser) then {
+if (_unit isIRLaserOn (currentWeapon _unit)) then {
 	_vars pushBack ["irlaser", true];
 };
 if (primaryWeapon _unit isNotEqualTo currentWeapon _unit) then {
@@ -75,6 +73,15 @@ if (vehicle _unit isNotEqualTo _unit) then {
 			(vehicle _unit) getCargoIndex _unit
 		}
 	]];
+};
+
+if (missionnamespace getVariable ["ace_main", false]) then {
+	if (_unit getVariable ["ace_captives_isSurrendering", false]) then {
+		_vars pushBack ["ace_surrender", true];
+	};
+	if (_unit getVariable ["ace_captives_isHandcuffed", false]) then {
+		_vars pushBack ["ace_handcuffed", true];
+	};
 };
 
 private _info = [

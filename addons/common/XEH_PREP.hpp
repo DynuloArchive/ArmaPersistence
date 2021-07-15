@@ -1,10 +1,14 @@
 PREP(getInventory);
+PREP(handleAceCargo);
 PREP(loadGroup);
 PREP(loadGroupComplete);
+PREP(loadMarker);
+PREP(loadMarkerComplete);
 PREP(loadObject);
 PREP(loadObjectComplete);
 PREP(loadUnit);
 PREP(loadUnitComplete);
 PREP(tickGroups);
+PREP(tickMarkers);
 PREP(tickObjects);
 PREP(tickUnits);

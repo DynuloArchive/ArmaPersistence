@@ -5,5 +5,3 @@
 } forEach GVAR(loadedUnits);
 
 GVAR(unitsReady) = true;
-
-systemChat "all unit loaded";

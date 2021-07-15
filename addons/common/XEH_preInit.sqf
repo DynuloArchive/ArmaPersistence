@@ -3,6 +3,7 @@ ADDON = false;
 #include "XEH_PREP.hpp"
 
 GVAR(groupsReady) = false;
+GVAR(markersReady) = false;
 GVAR(objectsReady) = false;
 GVAR(unitsReady) = false;
 
@@ -14,6 +15,10 @@ GVAR(loadedObjects) = [];
 GVAR(groupStack) = [];
 GVAR(groupNotSeen) = [];
 GVAR(groupIDStack) = [];
+
+GVAR(markerStack) = [];
+GVAR(markerNotSeen) = [];
+GVAR(markerIDStack) = [];
 
 GVAR(unitStack) = [];
 GVAR(unitNotSeen) = [];

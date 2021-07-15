@@ -23,6 +23,8 @@ mod groups;
 use groups::Group;
 mod units;
 use units::Unit;
+mod markers;
+use markers::Marker;
 
 #[rv]
 fn setup(token: String, key: String) -> bool {
@@ -127,6 +129,45 @@ fn get_groups() {
 fn delete_group(id: String) {
     if let Err(e) = groups::internal_delete(id) {
         error!("Error deleting group: {}", e);
+    }
+}
+
+#[rv(thread = true)]
+fn save_marker(id: String, position: String, variables: String) {
+    if let Err(e) = markers::internal_save(Marker {
+        id,
+        position,
+        variables: variables.replace("\"\"", "\""),
+    }) {
+        error!("Error saving marker: {}", e);
+    }
+}
+
+// get_markers
+#[rv(thread = true)]
+fn get_markers() {
+    match markers::internal_get() {
+        Ok(o) => {
+            for i in o {
+                rv_callback!(
+                    "dynulo_persistence",
+                    "marker",
+                    i.id,
+                    i.variables
+                );
+            }
+        }
+        Err(e) => {
+            error!("Error getting markers: {}", e);
+        }
+    }
+    rv_callback!("dynulo_persistence", "markers_complete");
+}
+
+#[rv(thread = true)]
+fn delete_marker(id: String) {
+    if let Err(e) = markers::internal_delete(id) {
+        error!("Error deleting marker: {}", e);
     }
 }
 
