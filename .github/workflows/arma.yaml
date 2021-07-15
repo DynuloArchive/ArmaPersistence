@@ -1,0 +1,71 @@
+name: Arma
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_extension:
+    strategy:
+      matrix:
+        arrays: [
+          os: { tag: "ubuntu-latest", lib: "libdynulo_persistence.so", target: "i686-unknown-linux-gnu" },
+          os: { tag: "ubuntu-latest", lib: "libdynulo_persistence.so", target: "x86_64-unknown-linux-gnu" },
+          os: { tag: "windows-latest", lib: "dynulo_persistence.dll", target: "i686-pc-windows-msvc" },
+          os: { tag: "windows-latest", lib: "dynulo_persistence.dll", target: "x86_64-pc-windows-msvc" },
+        ]
+    runs-on: ${{ matrix.arrays.os.tag }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Install latest
+        uses: actions-rs/toolchain@v1
+        with:
+          target: ${{ matrix.arrays.os.target }}
+          toolchain: stable
+      - name: Install 32bit packages
+        run: sudo apt-get install gcc-multilib
+        if: ${{ matrix.arrays.os.target == 'i686-unknown-linux-gnu' }}
+      - name: Cargo Build
+        run: cd extension && cargo build --release --target ${{ matrix.arrays.os.target }}
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.arrays.os.target }}
+          path: extension/target/${{ matrix.arrays.os.target }}/release/${{ matrix.arrays.os.lib }}
+          if-no-files-found: error
+          retention-days: 30
+  package:
+    needs: build_extension
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      
+      - uses: actions/download-artifact@v2
+        with:
+          name: i686-unknown-linux-gnu
+      - run: mv libdynulo_persistence.so dynulo_persistence.so
+      - uses: actions/download-artifact@v2
+        with:
+          name: x86_64-unknown-linux-gnu
+      - run: mv libdynulo_persistence.so dynulo_persistence_x64.so
+      - uses: actions/download-artifact@v2
+        with:
+          name: x86_64-pc-windows-msvc
+      - run: mv dynulo_persistence.dll dynulo_persistence_x64.dll
+      - uses: actions/download-artifact@v2
+        with:
+          name: i686-pc-windows-msvc
+
+      - name: Set VERSION env
+        run: echo VERSION=${GITHUB_REF:11} >> $GITHUB_ENV
+      - name: Build addon with HEMTT
+        uses: arma-actions/hemtt@master
+        with:
+          command: 'build --release'
+      - uses: actions/upload-artifact@v2
+        with:
+          name: persistence.zip
+          path: 'releases/persistence.zip'

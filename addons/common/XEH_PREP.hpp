@@ -1,0 +1,10 @@
+PREP(getInventory);
+PREP(loadGroup);
+PREP(loadGroupComplete);
+PREP(loadObject);
+PREP(loadObjectComplete);
+PREP(loadUnit);
+PREP(loadUnitComplete);
+PREP(tickGroups);
+PREP(tickObjects);
+PREP(tickUnits);

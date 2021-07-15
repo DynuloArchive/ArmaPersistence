@@ -1,0 +1,8 @@
+name = "ArmaPersistence"
+prefix = "persistence"
+author = "Brett"
+mainprefix = "dynulo"
+include = ["./include"]
+files = ["mod.cpp", "dynulo_persistence_x64.dll", "dynulo_persistence_x64.so", "dynulo_persistence.dll", "dynulo_persistence.so"]
+
+releasebuild = ["@zip {{modname}}", "@zip {{key_name}}"]
