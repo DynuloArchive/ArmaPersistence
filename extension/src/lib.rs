@@ -153,6 +153,7 @@ fn get_markers() {
                     "dynulo_persistence",
                     "marker",
                     i.id,
+                    i.position,
                     i.variables
                 );
             }

@@ -34,6 +34,9 @@ This repository only contains the client side components of ArmaPersistence. Add
 - Collision Light State
 - Fuel Level
 - Cargo Fuel Level
+- Ammo
+- Cargo Ammo Level
+- Cargo Repair Level
 - Inflamed state (Campfires)
 - Plate Number
 - Textures

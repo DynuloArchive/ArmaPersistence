@@ -113,7 +113,7 @@ _obj setPosASL _position;
 		};
 		case "phases": {
 			{
-				_obj animate [_x#0, _x#1, true];
+				_obj animateSource [_x#0, _x#1, true];
 			} forEach _value;
 		};
 		case "terrain": {
@@ -131,6 +131,20 @@ _obj setPosASL _position;
 		};
 		case "cargo": {
 			_obj setVariable [QGVAR(toLoad), _value];
+		};
+		case "ammo": {
+			_obj setVehicleAmmo 0;
+			reverse _value;
+			{
+				_obj addMagazine _x;
+			} forEach _value;
+			reload _obj;
+		};
+		case "ammoCargo": {
+			_obj setAmmoCargo _value;
+		};
+		case "repairCargo": {
+			_obj setRepairCargo _value;
 		};
 	};
 } forEach _variables;

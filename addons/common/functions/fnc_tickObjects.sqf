@@ -61,6 +61,23 @@ if (_obj getVariable ["ace_rearm_magazineClass", ""] isNotEqualTo "") then {
 
 if !(alive _obj) then {
 	_vars pushBack ["alive", false];
+} else {
+	private _ammoCargo = getAmmoCargo _obj;
+	if (_ammoCargo isNotEqualTo -1) then {
+		_vars pushBack ["ammoCargo", _ammoCargo];
+	};
+	private _repairCargo = getRepairCargo _obj;
+	if (_repairCargo isNotEqualTo -1) then {
+		_vars pushBack ["repairCargo", _ammoCargo];
+	};
+	private _fuelCargo = getFuelCargo _obj;
+	if (_fuelCargo != -1) then {
+		_vars pushBack ["fuelCargo", _fuelCargo];
+	};
+	private _ammo = magazinesAmmo _obj;
+	if (_ammo isNotEqualTo []) then {
+		_vars pushBack ["ammo", _ammo];
+	};
 };
 if (fuel _obj != 1) then {
 	_vars pushBack ["fuel", fuel _obj];
@@ -91,10 +108,8 @@ if (_hits isNotEqualTo []) then {
 
 private _phases = [];
 {
-	private _phase = _obj animationPhase _x;
-	if (_phase != 0) then {
-		_phases pushBack [_x, _phase];
-	};
+	private _phase = _obj animationSourcePhase _x;
+	_phases pushBack [_x, _phase];
 } forEach (animationNames _obj);
 if (_phases isNotEqualTo []) then {
 	_vars pushBack ["phases", _phases];
@@ -107,11 +122,6 @@ if (_obj getVariable [QGVAR(terrain), ""] isNotEqualTo "") then {
 private _locked = locked _obj;
 if !(_locked in [-1, 0]) then {
 	_vars pushBack ["locked", _locked];
-};
-
-private _fuelCargo = getFuelCargo _obj;
-if (_fuelCargo != -1) then {
-	_vars pushBack ["fuelCargo", _fuelCargo];
 };
 
 private _tree = [_obj] call FUNC(getInventory);

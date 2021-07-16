@@ -12,6 +12,11 @@ _position set [0, parseNumber (_position select 0)];
 _position set [1, parseNumber (_position select 1)];
 
 private _marker = createMarkerLocal [_id, _position];
+// use some defaults to save on space
+_marker setMarkerTypeLocal "hd_dot";
+_marker setMarkerShadowLocal true;
+_marker setMarkerColorLocal "ColorBlack";
+GVAR(markerIDStack) pushBackUnique _marker;
 
 {
 	_x params ["_key", "_value"];

@@ -15,6 +15,9 @@ if (GVAR(markerStack) isEqualTo []) exitWith {};
 
 private _marker = GVAR(markerStack) deleteAt 0;
 GVAR(markerIDStack) pushBackUnique _marker;
+
+if (markerShape _marker isEqualTo "ERROR") exitWith {};
+
 GVAR(markerNotSeen) = GVAR(markerNotSeen) - [_marker];
 
 private _vars = [];
@@ -31,7 +34,7 @@ if (markerSize _marker isNotEqualTo [1,1]) then {
 if (markerText _marker != "") then {
 	_vars pushBack ["text", markerText _marker];
 };
-if (markerType _marker != "hd_dot") then {
+if (markerType _marker != "") then {
 	_vars pushBack ["type", markerType _marker];
 };
 if (markerBrush _marker != "Solid") then {
