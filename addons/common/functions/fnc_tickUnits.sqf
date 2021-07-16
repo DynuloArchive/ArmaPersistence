@@ -3,7 +3,7 @@
 if !(GVAR(unitsReady)) exitWith {};
 
 if (GVAR(unitStack) isEqualTo []) then {
-	GVAR(unitStack) = allUnits;
+	GVAR(unitStack) = allUnits - allPlayers;
 	{
 		EXT callExtension ["delete_unit", [_x]];
 		GVAR(unitIDStack) = GVAR(unitIDStack) - [_x];
