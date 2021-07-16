@@ -11,8 +11,9 @@ if (GVAR(unitStack) isEqualTo []) then {
 	GVAR(unitNotSeen) = +GVAR(unitIDStack);
 };
 
+if (GVAR(unitStack) isEqualTo []) then {};
+
 private _unit = GVAR(unitStack) deleteAt 0;
-if (isPlayer _unit) exitWith {};
 
 private _id = _unit getVariable [QGVAR(id), ""];
 if (_id isEqualTo "") then {
