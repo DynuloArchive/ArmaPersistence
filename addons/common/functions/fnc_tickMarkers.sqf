@@ -34,7 +34,7 @@ if (markerSize _marker isNotEqualTo [1,1]) then {
 if (markerText _marker != "") then {
 	_vars pushBack ["text", markerText _marker];
 };
-if (markerType _marker != "") then {
+if (markerType _marker != "hd_dot") then {
 	_vars pushBack ["type", markerType _marker];
 };
 if (markerBrush _marker != "Solid") then {
